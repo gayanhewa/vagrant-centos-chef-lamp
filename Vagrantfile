@@ -36,14 +36,14 @@ Vagrant.configure(2) do |config|
         # dns name in VM and Host
         node.vm.hostname = 'www.project1.dev'
         # set a dedicated ip
-        node.vm.network :private_network, ip: '192.168.13.37'
-        node.hostmanager.aliases = %w(www.project1.dev www.project2.dev)
+        node.vm.network :private_network, ip: '192.168.19.37'
+        node.hostmanager.aliases = %w(customer2.rms.com customer3.rms.com)
 	    config.vm.network :forwarded_port, guest: 3306, host: 3306
     end
 
    # config.omnibus.chef_version = :latest
 
-    config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "vagrant"
+    config.vm.synced_folder "/Users/gayan/Workspace", "/vagrant", :owner => "vagrant", :group => "vagrant"
 
     # If true, then any SSH connections made will enable agent forwarding.
     # Default value: false
@@ -59,12 +59,12 @@ Vagrant.configure(2) do |config|
 
         chef.json = {
             :lamp  => {
-                vhosts: [ "project1.dev", "project2.dev" ]
+                vhosts: [ "customer2.rms.com", "customer3.rms.com" ]
             },
             :nginx => {
                 default_site_enabled: false,
                 sendfile: "off",
-                default_root: "/vagrant",
+                default_root: "/vagrant/platform-cms/public",
                 listen: "unix:/var/run/php-fpm-www.sock",
                 user: "vagrant",
                 group: "vagrant",
@@ -77,5 +77,3 @@ Vagrant.configure(2) do |config|
 
     end
 end
-
-
